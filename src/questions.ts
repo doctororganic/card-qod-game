@@ -10,6 +10,7 @@ export interface Question {
   category: QuestionCategory;
   difficulty: QuestionDifficulty;
   type: string; // e.g., 'تناظر لفظي', 'حساب', etc.
+  explanation: string;
 }
 
 export const QUESTIONS: Question[] = [
@@ -21,7 +22,8 @@ export const QUESTIONS: Question[] = [
     correctIndex: 1,
     category: 'لفظي',
     difficulty: 'سهل',
-    type: 'تناظر لفظي'
+    type: 'تناظر لفظي',
+    explanation: 'العلاقة هي الوظيفة: يستخدم القلم للكتابة، ويستخدم المشرط للجراحة.'
   },
   {
     id: 'e2',
@@ -30,7 +32,8 @@ export const QUESTIONS: Question[] = [
     correctIndex: 3,
     category: 'لفظي',
     difficulty: 'سهل',
-    type: 'المفردة الشاذة'
+    type: 'المفردة الشاذة',
+    explanation: 'الكلمات الأخرى هي ألوان، بينما "ضوء" ليس لوناً وإنما هو مسبب الرؤية.'
   },
   {
     id: 'e3',
@@ -39,7 +42,8 @@ export const QUESTIONS: Question[] = [
     correctIndex: 2,
     category: 'كمي',
     difficulty: 'سهل',
-    type: 'جبر'
+    type: 'جبر',
+    explanation: 'نطرح ٧ من الطرفين: ٣س = ١٥، ثم نقسم على ٣: س = ٥.'
   },
   {
     id: 'e4',
@@ -48,7 +52,8 @@ export const QUESTIONS: Question[] = [
     correctIndex: 1,
     category: 'كمي',
     difficulty: 'سهل',
-    type: 'هندسة'
+    type: 'هندسة',
+    explanation: 'باستخدام نظرية فيثاغورس: الوتر^٢ = ٦^٢ + ٨^٢ = ٣٦ + ٦٤ = ١٠٠. إذاً الوتر = جذر(١٠٠) = ١٠.'
   },
   {
     id: 'e5',
@@ -57,7 +62,8 @@ export const QUESTIONS: Question[] = [
     correctIndex: 0,
     category: 'لفظي',
     difficulty: 'سهل',
-    type: 'إكمال جمل'
+    type: 'إكمال جمل',
+    explanation: 'الجهل يؤدي عادة للتسرع وعدم الحكمة في اتخاذ القرار.'
   },
   {
     id: 'e6',
@@ -66,7 +72,8 @@ export const QUESTIONS: Question[] = [
     correctIndex: 1,
     category: 'كمي',
     difficulty: 'سهل',
-    type: 'حساب'
+    type: 'حساب',
+    explanation: 'ثمن القلم الواحد = ٢٠ / ٥ = ٤ ريالات. ثمن ٣ أقلام = ٣ × ٤ = ١٢ ريالاً.'
   },
   {
     id: 'e7',
@@ -75,7 +82,8 @@ export const QUESTIONS: Question[] = [
     correctIndex: 2,
     category: 'لفظي',
     difficulty: 'سهل',
-    type: 'تناظر لفظي'
+    type: 'تناظر لفظي',
+    explanation: 'العلاقة هي الشيء وما يحتويه: الغابة تحتوي الأشجار، والبحر يحتوي الأسماك.'
   },
   {
     id: 'e8',
@@ -84,7 +92,8 @@ export const QUESTIONS: Question[] = [
     correctIndex: 2,
     category: 'كمي',
     difficulty: 'سهل',
-    type: 'حساب'
+    type: 'حساب',
+    explanation: 'بفرض العدد س: ٤س + ٧ = ٣١. نطرح ٧: ٤س = ٢٤. نقسم على ٤: س = ٦.'
   },
   {
     id: 'e9',
@@ -93,7 +102,8 @@ export const QUESTIONS: Question[] = [
     correctIndex: 1,
     category: 'لفظي',
     difficulty: 'سهل',
-    type: 'تناظر لفظي'
+    type: 'تناظر لفظي',
+    explanation: 'العلاقة جزء من كل: الكلمة جزء من الجملة، والحرف جزء من الكلمة.'
   },
   {
     id: 'e10',
@@ -102,7 +112,8 @@ export const QUESTIONS: Question[] = [
     correctIndex: 2,
     category: 'كمي',
     difficulty: 'سهل',
-    type: 'حساب'
+    type: 'حساب',
+    explanation: 'العدد الأولي هو الذي يقبل القسمة على نفسه والواحد فقط. ١٧ عدد أولي.'
   },
   {
       id: 'e11',
@@ -111,7 +122,8 @@ export const QUESTIONS: Question[] = [
       correctIndex: 3,
       category: 'لفظي',
       difficulty: 'سهل',
-      type: 'خطأ سياقي'
+      type: 'خطأ سياقي',
+      explanation: 'الخطأ في كلمة "يخفي" والصحيح "يُظهر" أو "يبدي" تأثراً بقباحة قدميه مقارنة بريشه.'
   },
   {
       id: 'e12',
@@ -120,7 +132,8 @@ export const QUESTIONS: Question[] = [
       correctIndex: 3,
       category: 'كمي',
       difficulty: 'سهل',
-      type: 'هندسة'
+      type: 'هندسة',
+      explanation: 'طول ضلع المربع = ٢٠ / ٤ = ٥ سم. المساحة = طول الضلع × نفسه = ٥ × ٥ = ٢٥ سم٢.'
   },
   {
       id: 'e13',
@@ -129,7 +142,8 @@ export const QUESTIONS: Question[] = [
       correctIndex: 0,
       category: 'لفظي',
       difficulty: 'سهل',
-      type: 'تناظر لفظي'
+      type: 'تناظر لفظي',
+      explanation: 'العلاقة هي الكائن وصوته: الأسد صوته زئير، والحمامة صوتها هديل.'
   },
   {
       id: 'e14',
@@ -138,7 +152,8 @@ export const QUESTIONS: Question[] = [
       correctIndex: 3,
       category: 'كمي',
       difficulty: 'سهل',
-      type: 'حساب'
+      type: 'حساب',
+      explanation: 'نلاحظ أننا نضرب في ٢ في كل مرة: ١٦ × ٢ = ٣٢.'
   },
   {
       id: 'e15',
@@ -147,7 +162,8 @@ export const QUESTIONS: Question[] = [
       correctIndex: 2,
       category: 'لفظي',
       difficulty: 'سهل',
-      type: 'المفردة الشاذة'
+      type: 'المفردة الشاذة',
+      explanation: 'القمح من الحبوب، بينما الفول والعدس والحمص من البقوليات.'
   },
   {
       id: 'e16',
@@ -156,7 +172,8 @@ export const QUESTIONS: Question[] = [
       correctIndex: 1,
       category: 'لفظي',
       difficulty: 'سهل',
-      type: 'تناظر لفظي'
+      type: 'تناظر لفظي',
+      explanation: 'العلاقة هي التلازم الزمني والظهور: الشمس تظهر في النهار، والقمر يظهر في الليل.'
   },
   {
       id: 'e17',
@@ -165,7 +182,8 @@ export const QUESTIONS: Question[] = [
       correctIndex: 1,
       category: 'كمي',
       difficulty: 'سهل',
-      type: 'حساب'
+      type: 'حساب',
+      explanation: 'ثمن الكرة الواحدة = ٢٠ / ٤ = ٥ ريالات. ثمن ٧ كرات = ٧ × ٥ = ٣٥ ريالاً.'
   },
   {
       id: 'e18',
@@ -174,7 +192,8 @@ export const QUESTIONS: Question[] = [
       correctIndex: 0,
       category: 'لفظي',
       difficulty: 'سهل',
-      type: 'إكمال جمل'
+      type: 'إكمال جمل',
+      explanation: 'هذه مقولة شهيرة: "صديقك من صَدَقَك لا من صَدَّقك".'
   },
   {
       id: 'e19',
@@ -183,7 +202,8 @@ export const QUESTIONS: Question[] = [
       correctIndex: 1,
       category: 'كمي',
       difficulty: 'سهل',
-      type: 'إحصاء'
+      type: 'إحصاء',
+      explanation: 'المنوال هو القيمة الأكثر تكراراً، والعدد ٥ تكرر ٣ مرات.'
   },
   {
       id: 'e20',
@@ -192,7 +212,8 @@ export const QUESTIONS: Question[] = [
       correctIndex: 1,
       category: 'لفظي',
       difficulty: 'سهل',
-      type: 'المفردة الشاذة'
+      type: 'المفردة الشاذة',
+      explanation: 'بقية الاختيارات فواكه، بينما الخيار من الخضروات.'
   },
   {
       id: 'e21',
@@ -201,7 +222,8 @@ export const QUESTIONS: Question[] = [
       correctIndex: 2,
       category: 'كمي',
       difficulty: 'سهل',
-      type: 'هندسة'
+      type: 'هندسة',
+      explanation: 'المحيط = طول الضلع × ٤ = ٤ × ٤ = ١٦ سم.'
   },
   {
       id: 'e22',
@@ -210,7 +232,8 @@ export const QUESTIONS: Question[] = [
       correctIndex: 0,
       category: 'لفظي',
       difficulty: 'سهل',
-      type: 'تناظر لفظي'
+      type: 'تناظر لفظي',
+      explanation: 'الرئة وظيفتها التنفس، والعين وظيفتها الرؤية.'
   },
   {
       id: 'e23',
@@ -219,7 +242,8 @@ export const QUESTIONS: Question[] = [
       correctIndex: 1,
       category: 'كمي',
       difficulty: 'سهل',
-      type: 'حساب'
+      type: 'حساب',
+      explanation: 'حسب ترتيب العمليات الحسابية الضرب قبل الجمع: ٢٠ × ٠ = ٠، ثم ٢٠ + ٠ = ٢٠.'
   },
   {
       id: 'e24',
@@ -228,7 +252,8 @@ export const QUESTIONS: Question[] = [
       correctIndex: 2,
       category: 'لفظي',
       difficulty: 'سهل',
-      type: 'خطأ سياقي'
+      type: 'خطأ سياقي',
+      explanation: 'الخطأ في كلمة "المتشائم" والصواب هو "المتزن" أو "الحكيم".'
   },
   {
       id: 'e25',
@@ -237,7 +262,8 @@ export const QUESTIONS: Question[] = [
       correctIndex: 2,
       category: 'كمي',
       difficulty: 'سهل',
-      type: 'حساب'
+      type: 'حساب',
+      explanation: 'الساعة هي ٦٠ دقيقة، إذاً ٣ ساعات = ٣ × ٦٠ = ١٨٠ دقيقة.'
   },
   {
       id: 'e26',
@@ -246,7 +272,8 @@ export const QUESTIONS: Question[] = [
       correctIndex: 2,
       category: 'لفظي',
       difficulty: 'سهل',
-      type: 'تناظر لفظي'
+      type: 'تناظر لفظي',
+      explanation: 'الريم هو اسم من أسماء الغزال، والقسورة هو اسم من أسماء الأسد.'
   },
   {
       id: 'e27',
@@ -255,7 +282,8 @@ export const QUESTIONS: Question[] = [
       correctIndex: 2,
       category: 'كمي',
       difficulty: 'سهل',
-      type: 'جبر'
+      type: 'جبر',
+      explanation: 'س = ١٢ - ٥ = ٧. إذاً ٢س = ٢ × ٧ = ١٤.'
   },
   {
       id: 'e28',
@@ -264,7 +292,8 @@ export const QUESTIONS: Question[] = [
       correctIndex: 0,
       category: 'لفظي',
       difficulty: 'سهل',
-      type: 'إكمال جمل'
+      type: 'إكمال جمل',
+      explanation: 'التكملة المنطقية هي "الحياة مليئة بالصعاب، فعلينا أن نتحلى بالصبر".'
   },
   {
       id: 'e29',
@@ -273,7 +302,8 @@ export const QUESTIONS: Question[] = [
       correctIndex: 1,
       category: 'كمي',
       difficulty: 'سهل',
-      type: 'حساب'
+      type: 'حساب',
+      explanation: 'ربع العشرين = ٥. نصف الخمسة = ٢.٥.'
   },
   {
       id: 'e30',
@@ -282,9 +312,10 @@ export const QUESTIONS: Question[] = [
       correctIndex: 1,
       category: 'لفظي',
       difficulty: 'سهل',
-      type: 'تناظر لفظي'
+      type: 'تناظر لفظي',
+      explanation: 'الأذن وظيفتها السمع، واللسان وظيفته الأساسية التذوق.'
   },
-  // --- Medium Questions (Continued) ---
+  // --- Medium ---
   {
       id: 'm14',
       text: 'إذا كان سعر لتر البنزين ٢ ريال، فكم لتراً تشتري بـ ١٠٠ ريال؟',
@@ -292,7 +323,8 @@ export const QUESTIONS: Question[] = [
       correctIndex: 2,
       category: 'كمي',
       difficulty: 'متوسط',
-      type: 'حساب'
+      type: 'حساب',
+      explanation: 'عدد اللتـرات = المبلغ / سعر اللتر = ١٠٠ / ٢ = ٥٠ لتر.'
   },
   {
       id: 'm15',
@@ -301,7 +333,8 @@ export const QUESTIONS: Question[] = [
       correctIndex: 2,
       category: 'لفظي',
       difficulty: 'متوسط',
-      type: 'خطأ سياقي'
+      type: 'خطأ سياقي',
+      explanation: 'الخطأ "نفع" الأولى، والصواب هو "ضرّ"، لأن كثرة الدواء ضارة.'
   },
   {
       id: 'm16',
@@ -310,7 +343,8 @@ export const QUESTIONS: Question[] = [
       correctIndex: 1,
       category: 'كمي',
       difficulty: 'متوسط',
-      type: 'إحصاء'
+      type: 'إحصاء',
+      explanation: 'المجموع = المتوسط × العدد = ١٥ × ٣ = ٤٥.'
   },
   {
       id: 'm17',
@@ -319,7 +353,8 @@ export const QUESTIONS: Question[] = [
       correctIndex: 0,
       category: 'لفظي',
       difficulty: 'متوسط',
-      type: 'تناظر لفظي'
+      type: 'تناظر لفظي',
+      explanation: 'النحل ينتج العسل، والبقرة تنتج الحليب أساساً.'
   },
   {
       id: 'm18',
@@ -328,7 +363,8 @@ export const QUESTIONS: Question[] = [
       correctIndex: 2,
       category: 'كمي',
       difficulty: 'متوسط',
-      type: 'هندسة'
+      type: 'هندسة',
+      explanation: 'نصف القطر = ٥. المساحة = ط × نق^٢ = ٣.١٤ × ٢٥ = ٧٨.٥ سم٢.'
   },
   {
       id: 'm19',
@@ -337,7 +373,8 @@ export const QUESTIONS: Question[] = [
       correctIndex: 0,
       category: 'لفظي',
       difficulty: 'متوسط',
-      type: 'إكمال جمل'
+      type: 'إكمال جمل',
+      explanation: 'من تعود أن يأخذ فقط، يصعب عليه أن يعطي.'
   },
   {
       id: 'm20',
@@ -346,7 +383,8 @@ export const QUESTIONS: Question[] = [
       correctIndex: 3,
       category: 'كمي',
       difficulty: 'متوسط',
-      type: 'جبر'
+      type: 'جبر',
+      explanation: 'س = ٤ × ٥ = ٢٠. إذاً س + ٤ = ٢٤.'
   },
   {
       id: 'm21',
@@ -355,7 +393,8 @@ export const QUESTIONS: Question[] = [
       correctIndex: 1,
       category: 'لفظي',
       difficulty: 'متوسط',
-      type: 'تناظر لفظي'
+      type: 'تناظر لفظي',
+      explanation: 'الصحفي مكانه الجريدة، والمعلم مكانه المدرسة.'
   },
   {
       id: 'm22',
@@ -364,7 +403,8 @@ export const QUESTIONS: Question[] = [
       correctIndex: 1,
       category: 'كمي',
       difficulty: 'متوسط',
-      type: 'حساب'
+      type: 'حساب',
+      explanation: 'الخسارة = ٤٠٠٠ × ٠.١ = ٤٠٠ ريال. ثمن البيع = ٤٠٠٠ - ٤٠٠ = ٣٦٠٠ ريال.'
   },
   {
       id: 'm23',
@@ -373,7 +413,8 @@ export const QUESTIONS: Question[] = [
       correctIndex: 2,
       category: 'لفظي',
       difficulty: 'متوسط',
-      type: 'تناظر لفظي'
+      type: 'تناظر لفظي',
+      explanation: 'الشتاء من صفاته البرد، والصيف من صفاته الحر.'
   },
   {
       id: 'm24',
@@ -382,7 +423,8 @@ export const QUESTIONS: Question[] = [
       correctIndex: 2,
       category: 'كمي',
       difficulty: 'متوسط',
-      type: 'حساب'
+      type: 'حساب',
+      explanation: 'العدد يقبل القسمة على ٣ إذا كان مجموع أرقامه يقبل القسمة على ٣. ١٨ (١+٨=٩) تقبل القسمة على ٣.'
   },
   {
       id: 'm25',
@@ -391,7 +433,8 @@ export const QUESTIONS: Question[] = [
       correctIndex: 2,
       category: 'لفظي',
       difficulty: 'متوسط',
-      type: 'خطأ سياقي'
+      type: 'خطأ سياقي',
+      explanation: 'الخطأ هو "يرفع"، والصحيح "يخفض" أو "يقلل" لأن البخل صفة ذميمة.'
   },
   {
       id: 'm26',
@@ -400,7 +443,8 @@ export const QUESTIONS: Question[] = [
       correctIndex: 1,
       category: 'كمي',
       difficulty: 'متوسط',
-      type: 'هندسة'
+      type: 'هندسة',
+      explanation: 'طول الضلع = المحيط / ٣ = ١٨ / ٣ = ٦ سم.'
   },
   {
       id: 'm27',
@@ -409,9 +453,9 @@ export const QUESTIONS: Question[] = [
       correctIndex: 0,
       category: 'لفظي',
       difficulty: 'متوسط',
-      type: 'إكمال جمل'
+      type: 'إكمال جمل',
+      explanation: 'العدل أساس الملك أو الحكم.'
   },
-  // --- Medium-Hard Questions (Continued) ---
   {
       id: 'mh8',
       text: 'إذا كان س^٢ = ٤٩ وَ ص^٢ = ٦٤، وس ص < ٠، فما قيمة (س - ص)^٢؟',
@@ -419,7 +463,8 @@ export const QUESTIONS: Question[] = [
       correctIndex: 3,
       category: 'كمي',
       difficulty: 'متوسط-صعب',
-      type: 'جبر'
+      type: 'جبر',
+      explanation: 'س قد تكون ٧ أو -٧، وص قد تكون ٨ أو -٨. بما أن س ص < ٠، فأحدهما موجب والآخر سالب. لتكن س=٧ وص=-٨. (٧ - (-٨))^٢ = ١٥^٢ = ٢٢٥.'
   },
   {
       id: 'mh9',
@@ -428,7 +473,8 @@ export const QUESTIONS: Question[] = [
       correctIndex: 2,
       category: 'لفظي',
       difficulty: 'متوسط-صعب',
-      type: 'تناظر لفظي'
+      type: 'تناظر لفظي',
+      explanation: 'العلاقة هي الترادف: الريم والظبي من أسماء الغزال، والمهند من أسماء السيف.'
   },
   {
       id: 'mh10',
@@ -437,7 +483,8 @@ export const QUESTIONS: Question[] = [
       correctIndex: 2,
       category: 'كمي',
       difficulty: 'متوسط-صعب',
-      type: 'إحصاء'
+      type: 'إحصاء',
+      explanation: 'الاحتمال = عدد كرات اللون / المجموع الكلي = ٣ / (٣+٤) = ٣/٧.'
   },
   {
       id: 'mh11',
@@ -446,7 +493,8 @@ export const QUESTIONS: Question[] = [
       correctIndex: 0,
       category: 'لفظي',
       difficulty: 'متوسط-صعب',
-      type: 'إكمال جمل'
+      type: 'إكمال جمل',
+      explanation: '"من لا يقرأ ليس له فضل على من لا يعرف القراءة".'
   },
   {
       id: 'mh12',
@@ -455,7 +503,8 @@ export const QUESTIONS: Question[] = [
       correctIndex: 2,
       category: 'كمي',
       difficulty: 'متوسط-صعب',
-      type: 'جبر'
+      type: 'جبر',
+      explanation: 'س^٢ + س = ٢٠. بتجريب الخيارات: ٤^٢ + ٤ = ١٦ + ٤ = ٢٠.'
   },
   {
       id: 'mh13',
@@ -464,7 +513,8 @@ export const QUESTIONS: Question[] = [
       correctIndex: 1,
       category: 'لفظي',
       difficulty: 'متوسط-صعب',
-      type: 'خطأ سياقي'
+      type: 'خطأ سياقي',
+      explanation: 'الخطأ "تندم" والصواب "تُعلم" (من العلم)، أو "اصمت وسوف تندم" حسب سياقات الحكم.'
   },
   {
       id: 'mh14',
@@ -473,7 +523,8 @@ export const QUESTIONS: Question[] = [
       correctIndex: 1,
       category: 'كمي',
       difficulty: 'متوسط-صعب',
-      type: 'هندسة'
+      type: 'هندسة',
+      explanation: 'المحيط = ٢(الطول + العرض) = ٢(٢س + س) = ٦س. ٦س = ٤٨، إذاً س = ٨.'
   },
   {
       id: 'mh15',
@@ -482,9 +533,9 @@ export const QUESTIONS: Question[] = [
       correctIndex: 2,
       category: 'لفظي',
       difficulty: 'متوسط-صعب',
-      type: 'تناظر لفظي'
+      type: 'تناظر لفظي',
+      explanation: 'العلاقة هي الشيء والمادة المصنوع منها: الحذاء يصنع من الجلد، والخاتم يصنع من الذهب.'
   },
-  // --- Hard Questions (Continued) ---
   {
       id: 'h8',
       text: 'إذا كان س^٣ = -٨، فما قيمة س^٢ + س + ١؟',
@@ -492,7 +543,8 @@ export const QUESTIONS: Question[] = [
       correctIndex: 1,
       category: 'كمي',
       difficulty: 'صعب جداً',
-      type: 'جبر'
+      type: 'جبر',
+      explanation: 'س = -٢. (-٢)^٢ + (-٢) + ١ = ٤ - ٢ + ١ = ٣.'
   },
   {
       id: 'h9',
@@ -501,7 +553,8 @@ export const QUESTIONS: Question[] = [
       correctIndex: 0,
       category: 'لفظي',
       difficulty: 'صعب جداً',
-      type: 'إكمال جمل'
+      type: 'إكمال جمل',
+      explanation: 'الحزن والمواساة لا تُنسى: "قد ينسى المرء من ضحك معه لكنه لن ينسى من بكى معه".'
   },
   {
       id: 'h10',
@@ -510,7 +563,8 @@ export const QUESTIONS: Question[] = [
       correctIndex: 2,
       category: 'كمي',
       difficulty: 'صعب جداً',
-      type: 'حساب'
+      type: 'حساب',
+      explanation: 'السرعة الأولى = ٤٨٠ / ٤ = ١٢٠ كم/س. السرعة الثانية = ٤٨٠ / ٥ = ٩٦ كم/س. الفرق = ١٢٠ - ٩٦ = ٢٤ كم/س.'
   },
   {
       id: 'h11',
@@ -519,7 +573,8 @@ export const QUESTIONS: Question[] = [
       correctIndex: 2,
       category: 'لفظي',
       difficulty: 'صعب جداً',
-      type: 'خطأ سياقي'
+      type: 'خطأ سياقي',
+      explanation: 'الخطأ في كلمة "الخطأ"، لأن الحكمة هي وضع الشيء في مكانه "الصحيح".'
   },
   {
       id: 'h12',
@@ -528,7 +583,8 @@ export const QUESTIONS: Question[] = [
       correctIndex: 3,
       category: 'كمي',
       difficulty: 'صعب جداً',
-      type: 'هندسة'
+      type: 'هندسة',
+      explanation: 'طول الضلع = الجذر التكعيبي لـ ٦٤ = ٤ سم. مساحة الوجه = ٤ × ٤ = ١٦ سم٢.'
   },
   {
       id: 'h13',
@@ -537,7 +593,8 @@ export const QUESTIONS: Question[] = [
       correctIndex: 1,
       category: 'كمي',
       difficulty: 'صعب جداً',
-      type: 'حساب'
+      type: 'حساب',
+      explanation: 'سرعة أحمد = ١/٣، سرعة خالد = ١/٦. مجموع سرعتهما = ١/٣ + ١/٦ = ١/٢. الوقت المطلوب = ٢ ساعة.'
   },
   {
       id: 'h14',
@@ -546,7 +603,8 @@ export const QUESTIONS: Question[] = [
       correctIndex: 2,
       category: 'لفظي',
       difficulty: 'صعب جداً',
-      type: 'إكمال جمل'
+      type: 'إكمال جمل',
+      explanation: 'كنوع من الجزاء من جنس العمل، الذي يعيش منافقاً يموت كمن لا هوية ولا وجه له.'
   },
   {
       id: 'h15',
@@ -555,7 +613,8 @@ export const QUESTIONS: Question[] = [
       correctIndex: 1,
       category: 'كمي',
       difficulty: 'صعب جداً',
-      type: 'مقارنات'
+      type: 'مقارنات',
+      explanation: 'بتبسيط الأسس بقسمتها على ١٠: ٢^٦=٦٤، ٣^٤=٨١، ٤^٣=٦٤، ٨^٢=٦٤. الأكبر هو ٨١.'
   },
   {
       id: 'h16',
@@ -564,7 +623,8 @@ export const QUESTIONS: Question[] = [
       correctIndex: 2,
       category: 'كمي',
       difficulty: 'صعب جداً',
-      type: 'حساب'
+      type: 'حساب',
+      explanation: 'الفرق بين الربع والثلاثة أرباع هو النصف. إذاً نصف الأسطوانة = ٧٠ لتر، السعة الكاملة = ١٤٠ لتر.'
   },
   {
       id: 'h17',
@@ -573,7 +633,8 @@ export const QUESTIONS: Question[] = [
       correctIndex: 0,
       category: 'لفظي',
       difficulty: 'صعب جداً',
-      type: 'إكمال جمل'
+      type: 'إكمال جمل',
+      explanation: '"إن المتكبر كواقف على جبل يرى الناس صغاراً ويرونه صغيراً".'
   },
   {
       id: 'm28',
@@ -582,7 +643,8 @@ export const QUESTIONS: Question[] = [
       correctIndex: 2,
       category: 'كمي',
       difficulty: 'متوسط',
-      type: 'جبر'
+      type: 'جبر',
+      explanation: 'س + ٤س = ٤٥ -> ٥س = ٤٥ -> س = ٩ سنوات.'
   },
   {
       id: 'm29',
@@ -591,7 +653,8 @@ export const QUESTIONS: Question[] = [
       correctIndex: 2,
       category: 'لفظي',
       difficulty: 'متوسط',
-      type: 'المفردة الشاذة'
+      type: 'المفردة الشاذة',
+      explanation: 'بقية الاختيارات أيام، بينما رمضان شهر.'
   },
   {
       id: 'e31',
@@ -600,7 +663,8 @@ export const QUESTIONS: Question[] = [
       correctIndex: 2,
       category: 'لفظي',
       difficulty: 'سهل',
-      type: 'تناظر لفظي'
+      type: 'تناظر لفظي',
+      explanation: 'العلاقة عاصمة الدولة: الرياض عاصمة السعودية، والقاهرة عاصمة مصر.'
   },
   {
       id: 'e32',
@@ -609,7 +673,8 @@ export const QUESTIONS: Question[] = [
       correctIndex: 1,
       category: 'كمي',
       difficulty: 'سهل',
-      type: 'حساب'
+      type: 'حساب',
+      explanation: '١٧ = ٥ × ٣ + (٢). إذاً الباقي هو ٢.'
   },
   {
       id: 'e33',
@@ -618,7 +683,8 @@ export const QUESTIONS: Question[] = [
       correctIndex: 1,
       category: 'لفظي',
       difficulty: 'سهل',
-      type: 'إكمال جمل'
+      type: 'إكمال جمل',
+      explanation: 'مقولة شهيرة: "وخير جليس في الزمان كتابُ". والمفيد هو الأنسب هنا.'
   },
   {
       id: 'mh16',
@@ -627,7 +693,8 @@ export const QUESTIONS: Question[] = [
       correctIndex: 2,
       category: 'كمي',
       difficulty: 'متوسط-صعب',
-      type: 'حساب'
+      type: 'حساب',
+      explanation: 'نصف الـ ٩٨ هو ٤٩. والعدد الذي يضرب في ٧ ليعطي ٤٩ هو ٧.'
   },
   {
       id: 'mh17',
@@ -636,7 +703,8 @@ export const QUESTIONS: Question[] = [
       correctIndex: 1,
       category: 'لفظي',
       difficulty: 'متوسط-صعب',
-      type: 'تناظر لفظي'
+      type: 'تناظر لفظي',
+      explanation: 'العلاقة هي الترادف: النور هو الضياء، والظلام هو العتمة.'
   },
   {
       id: 'h18',
@@ -645,9 +713,9 @@ export const QUESTIONS: Question[] = [
       correctIndex: 2,
       category: 'كمي',
       difficulty: 'صعب جداً',
-      type: 'هندسة'
+      type: 'هندسة',
+      explanation: 'نق = ١٠. مساحة الدائرة = ١٠٠ط. مساحة ربع الدائرة = ١٠٠ط / ٤ = ٢٥ط.'
   },
-  // --- Medium Questions (18+) ---
   {
     id: 'm1',
     text: 'إذا كانت نسبة الطلاب الناجحين ٧٥٪ وعدد الطلاب ٢٨٠، كم عدد الناجحين؟',
@@ -655,7 +723,8 @@ export const QUESTIONS: Question[] = [
     correctIndex: 1,
     category: 'كمي',
     difficulty: 'متوسط',
-    type: 'حساب'
+    type: 'حساب',
+    explanation: '٧٥٪ من ٢٨٠ = ٢٨٠ × ٠.٧٥ = ٢١٠.'
   },
   {
     id: 'm2',
@@ -664,7 +733,8 @@ export const QUESTIONS: Question[] = [
     correctIndex: 0,
     category: 'لفظي',
     difficulty: 'متوسط',
-    type: 'إكمال جمل'
+    type: 'إكمال جمل',
+    explanation: 'الابتسامة الصادقة لا تعتاج لتكلف أو تصنع.'
   },
   {
     id: 'm3',
@@ -673,7 +743,8 @@ export const QUESTIONS: Question[] = [
     correctIndex: 2,
     category: 'كمي',
     difficulty: 'متوسط',
-    type: 'حساب'
+    type: 'حساب',
+    explanation: 'الخمس = ١٢٠ لتر. المتبقي = ٦٠٠ - ١٢٠ = ٤٨٠ لتر.'
   },
   {
     id: 'm4',
@@ -682,7 +753,8 @@ export const QUESTIONS: Question[] = [
     correctIndex: 1,
     category: 'لفظي',
     difficulty: 'متوسط',
-    type: 'تناظر لفظي'
+    type: 'تناظر لفظي',
+    explanation: 'العلاقة ارتباط زماني: النوم يكون في الليل، والصوم يكون في رمضان.'
   },
   {
     id: 'm5',
@@ -691,7 +763,8 @@ export const QUESTIONS: Question[] = [
     correctIndex: 2,
     category: 'كمي',
     difficulty: 'متوسط',
-    type: 'حساب'
+    type: 'حساب',
+    explanation: '١٠٪ من ٥٠٠ = ٥٠٠ / ١٠ = ٥٠ ريالاً.'
   },
   {
     id: 'm6',
@@ -700,7 +773,8 @@ export const QUESTIONS: Question[] = [
     correctIndex: 2,
     category: 'لفظي',
     difficulty: 'متوسط',
-    type: 'خطأ سياقي'
+    type: 'خطأ سياقي',
+    explanation: 'الخطأ "الخمول" والصح "بالنشاط".'
   },
   {
     id: 'm7',
@@ -709,7 +783,8 @@ export const QUESTIONS: Question[] = [
     correctIndex: 2,
     category: 'كمي',
     difficulty: 'متوسط',
-    type: 'جبر'
+    type: 'جبر',
+    explanation: 'خ = ٣ب. خ + ١٠ = ٢(ب + ١٠). ٣ب + ١٠ = ٢ب + ٢٠ -> ب = ١٠. خ = ٣٠.'
   },
   {
     id: 'm8',
@@ -718,7 +793,8 @@ export const QUESTIONS: Question[] = [
     correctIndex: 3,
     category: 'لفظي',
     difficulty: 'متوسط',
-    type: 'المفردة الشاذة'
+    type: 'المفردة الشاذة',
+    explanation: 'بقية المدن ساحلية، بينما الرياض مدينة داخلية.'
   },
   {
     id: 'm9',
@@ -727,7 +803,8 @@ export const QUESTIONS: Question[] = [
     correctIndex: 1,
     category: 'كمي',
     difficulty: 'متوسط',
-    type: 'هندسة'
+    type: 'هندسة',
+    explanation: '٤٠ = ٢(ط + ٨) -> ٢٠ = ط + ٨ -> ط = ١٢.'
   },
   {
     id: 'm10',
@@ -736,7 +813,8 @@ export const QUESTIONS: Question[] = [
     correctIndex: 1,
     category: 'لفظي',
     difficulty: 'متوسط',
-    type: 'تناظر لفظي'
+    type: 'تناظر لفظي',
+    explanation: 'التنافس يؤدي للفوز، والدراسة تؤدي للنجاح.'
   },
   {
       id: 'm11',
@@ -745,7 +823,8 @@ export const QUESTIONS: Question[] = [
       correctIndex: 2,
       category: 'كمي',
       difficulty: 'متوسط',
-      type: 'مقارنات'
+      type: 'مقارنات',
+      explanation: '١/٢ + ١/٤ = ٢/٤ + ١/٤ = ٣/٤. القيمتان متساويتان.'
   },
   {
       id: 'm12',
@@ -754,7 +833,8 @@ export const QUESTIONS: Question[] = [
       correctIndex: 1,
       category: 'لفظي',
       difficulty: 'متوسط',
-      type: 'إكمال جمل'
+      type: 'إكمال جمل',
+      explanation: 'العادات الحسنة تحمي صاحبها من غدر الزمان.'
   },
   {
       id: 'm13',
@@ -763,9 +843,9 @@ export const QUESTIONS: Question[] = [
       correctIndex: 2,
       category: 'كمي',
       difficulty: 'متوسط',
-      type: 'حساب'
+      type: 'حساب',
+      explanation: '٤٤١ = ١٠٥ × ٤ + (٢١). يتبقى ٢١ قلماً.'
   },
-  // --- Medium-Hard Questions (10+) ---
   {
     id: 'mh1',
     text: 'إذا اشترى أحمد ٣ سيارات بسعر السيارة الواحدة ٥٠٠ ألف ريال، ثم باعها بربح ٢٠٪، فكم باع السيارة الواحدة؟',
@@ -773,7 +853,8 @@ export const QUESTIONS: Question[] = [
     correctIndex: 1,
     category: 'كمي',
     difficulty: 'متوسط-صعب',
-    type: 'حساب'
+    type: 'حساب',
+    explanation: 'الربح = ٥٠٠ ألف × ٠.٢٠ = ١٠٠ ألف. سعر البيع = ٦٠٠ ألف.'
   },
   {
     id: 'mh2',
@@ -782,7 +863,8 @@ export const QUESTIONS: Question[] = [
     correctIndex: 3,
     category: 'لفظي',
     difficulty: 'متوسط-صعب',
-    type: 'خطأ سياقي'
+    type: 'خطأ سياقي',
+    explanation: 'الخطأ في "لغيره" والصح "لنفسه" أو "للكل" حسب سياق التناقض.'
   },
   {
     id: 'mh3',
@@ -791,7 +873,8 @@ export const QUESTIONS: Question[] = [
     correctIndex: 1,
     category: 'كمي',
     difficulty: 'متوسط-صعب',
-    type: 'هندسة'
+    type: 'هندسة',
+    explanation: 'مساحة الوجه الواحد = ١٥٠ / ٦ = ٢٥ سم٢. طول الضلع = جذر(٢٥) = ٥ سم.'
   },
   {
     id: 'mh4',
@@ -800,7 +883,8 @@ export const QUESTIONS: Question[] = [
     correctIndex: 2,
     category: 'لفظي',
     difficulty: 'متوسط-صعب',
-    type: 'تناظر لفظي'
+    type: 'تناظر لفظي',
+    explanation: 'الزلزال يترك خلفه دماراً، والنيران تترك خلفها رماداً.'
   },
   {
     id: 'mh5',
@@ -809,7 +893,8 @@ export const QUESTIONS: Question[] = [
     correctIndex: 2,
     category: 'كمي',
     difficulty: 'متوسط-صعب',
-    type: 'إحصاء'
+    type: 'إحصاء',
+    explanation: 'مجموع الـ ٥ = ١٠٠. مجموع الـ ٦ = ٢٢ × ٦ = ١٣٢. الرقم السادس = ٣٢.'
   },
   {
       id: 'mh6',
@@ -818,7 +903,8 @@ export const QUESTIONS: Question[] = [
       correctIndex: 3,
       category: 'لفظي',
       difficulty: 'متوسط-صعب',
-      type: 'إكمال جمل'
+      type: 'إكمال جمل',
+      explanation: 'مقولة شهيرة: "أن تضيء شمعة صغيرة خير من أن تذم الظلام".'
   },
   {
       id: 'mh7',
@@ -827,9 +913,9 @@ export const QUESTIONS: Question[] = [
       correctIndex: 0,
       category: 'كمي',
       difficulty: 'متوسط-صعب',
-      type: 'حساب'
+      type: 'حساب',
+      explanation: 'قوى العدد ٣ تتكرر آحادها بنمط: ٣، ٩، ٧، ١. نقسم الأس ٢٠ على ٤، الباقي ٠، إذاً نأخذ الحالة الرابعة وهي الآحاد ١.'
   },
-  // --- Hard Questions (10+) ---
   {
     id: 'h1',
     text: 'الخطأ السياقي: "المباني الجميلة التي نراها في المدن الكبرى، ما هي إلا تجسيد لخيالات المهندسين الذين لم يترجموا أحلامهم إلى واقع ملموس."',
@@ -837,7 +923,8 @@ export const QUESTIONS: Question[] = [
     correctIndex: 3,
     category: 'لفظي',
     difficulty: 'صعب جداً',
-    type: 'خطأ سياقي'
+    type: 'خطأ سياقي',
+    explanation: 'الخطأ "لم يترجموا" والصح "ترجموا"، لأن المباني موجودة بالفعل.'
   },
   {
     id: 'h2',
@@ -846,7 +933,8 @@ export const QUESTIONS: Question[] = [
     correctIndex: 0,
     category: 'كمي',
     difficulty: 'صعب جداً',
-    type: 'جبر'
+    type: 'جبر',
+    explanation: 'بضرب الطرفين في س: س^٢ = س + ١.'
   },
   {
     id: 'h3',
@@ -855,7 +943,8 @@ export const QUESTIONS: Question[] = [
     correctIndex: 2,
     category: 'كمي',
     difficulty: 'صعب جداً',
-    type: 'حساب'
+    type: 'حساب',
+    explanation: '١٥٠٪ من ١٢٠٠ = ١٨٠٠. ٨٪ من ١٨٠٠ = ١٤٤.'
   },
   {
     id: 'h4',
@@ -864,7 +953,8 @@ export const QUESTIONS: Question[] = [
     correctIndex: 0,
     category: 'لفظي',
     difficulty: 'صعب جداً',
-    type: 'إكمال جمل'
+    type: 'إكمال جمل',
+    explanation: 'التكملة هي الطاووس الذي يشتهر بريشه، والافتخار الحقيقي بالصفات المحمولة.'
   },
   {
     id: 'h5',
@@ -873,7 +963,8 @@ export const QUESTIONS: Question[] = [
     correctIndex: 1,
     category: 'كمي',
     difficulty: 'صعب جداً',
-    type: 'إحصاء'
+    type: 'إحصاء',
+    explanation: 'إنتاج ٥ أيام = ٧٥٠. إنتاج اليوم السادس = ١٥٠ + ١٥ = ١٦٥. المجموع = ٩١٥. المتوسط = ٩١٥ / ٦ = ١٥٢.٥.'
   },
   {
     id: 'h6',
@@ -882,7 +973,8 @@ export const QUESTIONS: Question[] = [
     correctIndex: 3,
     category: 'لفظي',
     difficulty: 'صعب جداً',
-    type: 'المفردة الشاذة'
+    type: 'المفردة الشاذة',
+    explanation: 'بقية الاختيارات من أسماء الأسد، بينما الفهد حيوان مختلف.'
   },
   {
       id: 'h7',
@@ -891,6 +983,7 @@ export const QUESTIONS: Question[] = [
       correctIndex: 2,
       category: 'كمي',
       difficulty: 'صعب جداً',
-      type: 'هندسة'
+      type: 'هندسة',
+      explanation: 'الزاوية ٩٠ تمثل ربع الدائرة. إذاً القوس ٤ سم يمثل ربع المحيط. المحيط الكامل = ٤ × ٤ = ١٦ سم.'
   }
 ];

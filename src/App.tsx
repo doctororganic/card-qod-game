@@ -34,7 +34,9 @@ const shuffle = <T,>(array: T[]): T[] => {
 };
 
 // Player Names
-const PLAYER_NAMES = ['اللاعب ١', 'اللاعب ٢', 'اللاعب ٣', 'اللاعب ٤']; // P1 & P3 Team A, P2 & P4 Team B
+const PLAYER_NAMES = ['أنت (اللاعب ١)', 'الكمبيوتر ٢', 'الكمبيوتر ٣', 'الكمبيوتر ٤']; // P1 & P3 Team A, P2 & P4 Team B
+
+type AIDifficulty = 'EASY' | 'MEDIUM' | 'HARD';
 
 interface TeamScoreCardProps {
   teamName: string;
@@ -77,6 +79,10 @@ export default function App() {
   const [teamAScore, setTeamAScore] = useState(0);
   const [teamBScore, setTeamBScore] = useState(0);
   
+  // AI State
+  const [aiLevel, setAiLevel] = useState<AIDifficulty>('MEDIUM');
+  const [isAiThinking, setIsAiThinking] = useState(false);
+  
   // Turn State
   const [activeCard, setActiveCard] = useState<Card | null>(null);
   const [activeQuestion, setActiveQuestion] = useState<Question | null>(null);
@@ -93,7 +99,8 @@ export default function App() {
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 
   // Initialize Game
-  const startGame = () => {
+  const startGame = (level: AIDifficulty) => {
+    setAiLevel(level);
     const freshDeck = shuffle(CARDS_CONFIG);
     const newHands: Card[][] = [[], [], [], []];
     
@@ -112,6 +119,7 @@ export default function App() {
     setMultipliers([1, 1, 1, 1]);
     setFrozen([false, false, false, false]);
     setPlayedCards([null, null, null, null]);
+    setIsAiThinking(false);
   };
 
   // Timer logic
@@ -227,6 +235,37 @@ export default function App() {
     setTeamBScore(currentScores[1] + currentScores[3]);
   };
 
+  const nextTurn = () => {
+    // Check if game end
+    if (hands.every(h => h.length === 0)) {
+      setGameState('END');
+      return;
+    }
+
+    // Next turn logic
+    let nTurn = (turn + 1) % 4;
+    
+    // If next player is frozen, skip them (unfreeze for next cycle)
+    if (frozen[nTurn]) {
+      const newFrozen = [...frozen];
+      newFrozen[nTurn] = false;
+      setFrozen(newFrozen);
+      nTurn = (nTurn + 1) % 4;
+    }
+
+    // If round finished (everyone played), clear table
+    if (nTurn === 0) {
+      setPlayedCards([null, null, null, null]);
+    }
+
+    setTurn(nTurn);
+    setActiveCard(null);
+    setActiveQuestion(null);
+    setIsAnswering(false);
+    setFeedback(null);
+    setIsAiThinking(false);
+  };
+
   const handleAnswer = (index: number) => {
     if (isAnswering || !activeQuestion || !activeCard) return;
 
@@ -241,38 +280,61 @@ export default function App() {
     });
 
     applyPower(activeCard, isCorrect, activeCard.points);
+  };
 
-    // Turn transition delay
-    setTimeout(() => {
-      // Check if game end
-      if (hands.every(h => h.length === 0)) {
-        setGameState('END');
+  // AI Logic Effect
+  useEffect(() => {
+    if (gameState !== 'PLAYING' || turn === 0 || isAiThinking) return;
+
+    // AI thinking process
+    setIsAiThinking(true);
+    
+    const thinkTimeout = setTimeout(() => {
+      // Step 1: Play a card
+      const aiHand = hands[turn];
+      if (aiHand.length === 0) {
+        nextTurn();
         return;
       }
 
-      // Next turn logic
-      let nextTurn = (turn + 1) % 4;
-      
-      // If next player is frozen, skip them (unfreeze for next cycle)
-      if (frozen[nextTurn]) {
-        const newFrozen = [...frozen];
-        newFrozen[nextTurn] = false;
-        setFrozen(newFrozen);
-        nextTurn = (nextTurn + 1) % 4;
-      }
+      // Simple AI card selection: Prefer high points or random
+      const cardIdx = Math.floor(Math.random() * aiHand.length);
+      const selectedCard = aiHand[cardIdx];
+      playCard(selectedCard, cardIdx);
 
-      // If round finished (everyone played), clear table
-      if (nextTurn === 0) {
-        setPlayedCards([null, null, null, null]);
-      }
-
-      setTurn(nextTurn);
-      setActiveCard(null);
-      setActiveQuestion(null);
-      setIsAnswering(false);
-      setFeedback(null);
+      // AI Delay for answering: at least 15 seconds
+      // Handled by the other useEffect
     }, 3000);
-  };
+
+    return () => clearTimeout(thinkTimeout);
+  }, [turn, gameState, hands, isAiThinking]);
+
+  // Refined AI Answer Effect
+  useEffect(() => {
+    if (gameState === 'PLAYING' && turn !== 0 && activeQuestion && !isAnswering) {
+      const delay = 15000 + (Math.random() * 3000); // 15s+ delay
+      const aiTimer = setTimeout(() => {
+        let selectedIdx = -1;
+        const roll = Math.random() * 100;
+        
+        let successChance = 50;
+        if (aiLevel === 'EASY') successChance = 30;
+        if (aiLevel === 'MEDIUM') successChance = 65;
+        if (aiLevel === 'HARD') successChance = 95;
+
+        if (roll < successChance) {
+          selectedIdx = activeQuestion.correctIndex;
+        } else {
+          // Choose a wrong answer
+          const wrongIndices = [0, 1, 2, 3].filter(i => i !== activeQuestion.correctIndex);
+          selectedIdx = wrongIndices[Math.floor(Math.random() * wrongIndices.length)];
+        }
+        handleAnswer(selectedIdx);
+      }, delay);
+      
+      return () => clearTimeout(aiTimer);
+    }
+  }, [activeQuestion, turn, gameState, aiLevel, isAnswering]);
 
   return (
     <div className="min-h-screen w-full flex flex-col overflow-hidden bg-[#0A0E2A]" dir="rtl">
@@ -306,14 +368,24 @@ export default function App() {
             </div>
           </div>
 
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={startGame}
-            className="px-12 py-4 bg-amber-400 text-navy text-2xl font-black rounded-full shadow-[0_0_30px_rgba(255,215,0,0.4)] hover:shadow-[0_0_50px_rgba(255,215,0,0.6)] transition-all"
-          >
-            ابدأ البطولة الآن
-          </motion.button>
+          <div className="flex flex-col gap-4 mb-12">
+            <h3 className="text-xl font-bold opacity-60">اختر مستوى الذكاء الاصطناعي (الخصم):</h3>
+            <div className="flex gap-4 justify-center">
+              {(['EASY', 'MEDIUM', 'HARD'] as AIDifficulty[]).map((level) => (
+                <button
+                  key={level}
+                  onClick={() => startGame(level)}
+                  className={`px-8 py-3 rounded-xl border-2 transition-all font-black ${
+                    level === 'EASY' ? 'border-green-500 text-green-400 hover:bg-green-500/20' :
+                    level === 'MEDIUM' ? 'border-amber-400 text-amber-400 hover:bg-amber-400/20' :
+                    'border-rose-600 text-rose-500 hover:bg-rose-600/20'
+                  }`}
+                >
+                  {level === 'EASY' ? 'سهل' : level === 'MEDIUM' ? 'متوسط' : 'صعب جداً'}
+                </button>
+              ))}
+            </div>
+          </div>
         </div>
       )}
 
@@ -370,7 +442,7 @@ export default function App() {
           <div className="flex-1 flex flex-col p-4 gap-4 overflow-hidden">
             
             {/* TOP ZONE: QUESTION AREA */}
-            <div className="h-[340px] bg-white/5 rounded-3xl border border-white/10 p-6 flex flex-col items-center justify-center relative overflow-hidden shrink-0">
+            <div className="min-h-[380px] flex-grow bg-white/5 rounded-3xl border border-white/10 p-6 flex flex-col items-center justify-center relative overflow-hidden shrink-0">
               <div className="absolute top-0 right-0 p-4 opacity-5 uppercase font-black text-6xl rotate-12 pointer-events-none">
                 {activeQuestion ? activeQuestion.category : 'قياس'}
               </div>
@@ -382,7 +454,7 @@ export default function App() {
                     initial={{ y: -20, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
                     exit={{ y: 20, opacity: 0 }}
-                    className="z-10 text-center w-full flex flex-col items-center"
+                    className="z-10 text-center w-full flex flex-col items-center py-4"
                   >
                     <div className={`inline-block px-4 py-1 rounded-full border text-xs font-bold mb-4 ${
                       activeCard?.difficulty === 'Hard' ? 'bg-rose-600/20 border-rose-500 text-rose-400' :
@@ -392,39 +464,70 @@ export default function App() {
                       سؤال الكرت: {activeCard?.name || activeQuestion.difficulty}
                     </div>
                     
-                    <h2 className="text-2xl md:text-3xl font-bold leading-relaxed mb-8 max-w-3xl">
+                    <h2 className="text-xl md:text-2xl font-bold leading-relaxed mb-6 max-w-3xl">
                       {activeQuestion.text}
                     </h2>
 
-                    <div className="grid grid-cols-2 gap-4 w-full max-w-4xl">
+                    <div className="grid grid-cols-2 gap-3 w-full max-w-4xl">
                       {activeQuestion.options.map((opt, i) => (
                         <button
                           key={i}
                           disabled={isAnswering}
                           onClick={() => handleAnswer(i)}
                           className={`
-                            bg-white/5 transition-all border border-white/10 rounded-xl p-4 text-xl font-bold text-right flex items-center gap-4 group relative overflow-hidden
+                            bg-white/5 transition-all border border-white/10 rounded-xl p-3 text-lg font-bold text-right flex items-center gap-3 group relative overflow-hidden
                             ${isAnswering ? 
                               (i === activeQuestion.correctIndex ? 'bg-green-500/40 border-green-500 glow-green' : 
                                (i === selectedOption ? 'bg-rose-500/40 border-rose-500 glow-crimson' : 'opacity-30'))
                               : 'hover:bg-[#FFD700] hover:text-black hover:border-transparent'}
                           `}
                         >
-                          <span className={`w-10 h-10 rounded-lg flex items-center justify-center shrink-0 ${isAnswering ? 'bg-black/40' : 'bg-black/30 group-hover:bg-black/10'}`}>
+                          <span className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 text-sm ${isAnswering ? 'bg-black/40' : 'bg-black/30 group-hover:bg-black/10'}`}>
                             {['أ', 'ب', 'ج', 'د'][i]}
                           </span>
-                          <span className="flex-1">{opt}</span>
+                          <span className="flex-1 line-clamp-1">{opt}</span>
                         </button>
                       ))}
                     </div>
 
-                    {feedback && (
+                    {isAnswering && (
                       <motion.div 
-                        initial={{ scale: 0.9, opacity: 0 }}
-                        animate={{ scale: 1, opacity: 1 }}
-                        className={`absolute bottom-4 px-6 py-2 rounded-full font-black text-sm z-20 ${feedback.isCorrect ? 'bg-green-500 text-white shadow-lg' : 'bg-rose-600 text-white shadow-lg'}`}
+                        initial={{ y: 20, opacity: 0 }}
+                        animate={{ y: 0, opacity: 1 }}
+                        className="mt-6 w-full max-w-4xl bg-black/60 backdrop-blur-xl border border-white/20 rounded-3xl p-6 text-right relative overflow-hidden"
                       >
-                        {feedback.message}
+                         <div className="absolute top-0 left-0 w-1 h-full bg-amber-400"></div>
+                         <div className="flex justify-between items-start mb-4">
+                            <div className="flex items-center gap-2">
+                               <Sparkles className="text-amber-400" size={18} />
+                               <span className="text-amber-400 font-extrabold text-lg">تحليل الإجابة والشرح:</span>
+                            </div>
+                            <button 
+                               onClick={nextTurn}
+                               className="bg-white/10 hover:bg-rose-600 p-2 rounded-full transition-all hover:scale-110 active:scale-95 group"
+                               title="إغلاق والانتقال للدور التالي"
+                            >
+                               <XCircle size={24} className="group-hover:text-white" />
+                            </button>
+                         </div>
+                         <p className="text-base md:text-lg opacity-90 leading-relaxed font-medium">
+                            {activeQuestion.explanation}
+                         </p>
+                         
+                         {/* Visual Feedback Badge */}
+                         <div className={`absolute -top-0 right-12 px-6 py-1 rounded-b-xl font-black text-sm shadow-lg ${feedback?.isCorrect ? 'bg-green-500 text-white' : 'bg-rose-600 text-white'}`}>
+                            {feedback?.isCorrect ? '✓ إجابة صحيحة' : '✗ إجابة خاطئة'}
+                         </div>
+                         
+                         <div className="mt-4 flex justify-end">
+                            <button 
+                               onClick={nextTurn}
+                               className="px-6 py-2 bg-amber-400 text-black font-black rounded-full hover:bg-amber-300 transition-all flex items-center gap-2"
+                            >
+                               <span>متابعة اللعب</span>
+                               <ArrowLeftRight size={16} />
+                            </button>
+                         </div>
                       </motion.div>
                     )}
                   </motion.div>
@@ -475,8 +578,8 @@ export default function App() {
                <div className="flex-1 bg-black/40 rounded-3xl border border-white/5 relative p-4 flex flex-col overflow-hidden">
                   
                   {/* Circular Table Area */}
-                  <div className="flex-1 flex items-center justify-center relative">
-                    <div className="w-[440px] h-[200px] border-2 border-dashed border-white/5 rounded-full flex items-center justify-center gap-4 relative">
+                  <div className="flex-1 flex items-center justify-center relative py-8">
+                    <div className="w-full max-w-[500px] min-h-[300px] border-2 border-dashed border-white/5 rounded-full flex items-center justify-center gap-4 relative">
                       
                       {/* Player Avatars around the table */}
                       <div className="absolute -top-12 left-1/2 -translate-x-1/2 flex flex-col items-center">
@@ -502,25 +605,24 @@ export default function App() {
                       {/* Played Card Slot (Current turn or last play) */}
                       <AnimatePresence>
                         {playedCards.some(pc => pc !== null) && (
-                          <div className="flex gap-4">
+                          <div className="flex gap-4 flex-wrap justify-center p-4">
                             {playedCards.map((pc, i) => pc && (
                               <motion.div
                                 key={i}
-                                initial={{ scale: 0, opacity: 0, y: 50 }}
-                                animate={{ scale: 1, opacity: 1, y: 0 }}
+                                initial={{ scale: 0, opacity: 0, y: 50, rotate: -20 }}
+                                animate={{ scale: 1, opacity: 1, y: 0, rotate: (i - 1) * 8 }}
                                 exit={{ scale: 0, opacity: 0 }}
-                                className={`w-24 h-36 rounded-lg border-2 shadow-2xl flex flex-col p-2 transition-transform ${
+                                className={`w-28 h-40 md:w-32 md:h-48 rounded-xl border-2 shadow-[0_10px_30px_rgba(0,0,0,0.5)] flex flex-col p-3 transition-transform ${
                                   pc.difficulty === 'Hard' ? 'bg-gradient-to-br from-rose-900 to-rose-950 border-rose-500' :
                                   pc.difficulty === 'MediumHard' ? 'bg-gradient-to-br from-amber-700 to-amber-900 border-amber-400' :
                                   'bg-slate-800 border-slate-600'
                                 }`}
-                                style={{ rotate: `${(i - 1) * 5}deg` }}
                               >
-                                <div className="text-[8px] font-bold opacity-50">{pc.difficulty.toUpperCase()}</div>
-                                <div className="flex-1 flex items-center justify-center text-center text-[10px] font-bold leading-tight">
+                                <div className="text-[10px] font-black opacity-50 mb-1">{pc.difficulty.toUpperCase()}</div>
+                                <div className="flex-1 flex items-center justify-center text-center text-xs md:text-sm font-black leading-tight">
                                   {pc.name}
                                 </div>
-                                <div className={`h-1 w-full ${pc.difficulty === 'Hard' ? 'bg-rose-500' : 'bg-amber-400'}`}></div>
+                                <div className={`h-1.5 w-full rounded-full mt-2 ${pc.difficulty === 'Hard' ? 'bg-rose-500 shadow-[0_0_10px_#f43f5e]' : 'bg-amber-400 shadow-[0_0_10px_#fbbf24]'}`}></div>
                               </motion.div>
                             ))}
                           </div>
@@ -530,41 +632,48 @@ export default function App() {
                   </div>
 
                   {/* ACTIVE PLAYER HAND */}
-                  <div className="h-48 relative">
-                    <div className="absolute inset-0 flex justify-center items-end pb-2 overflow-x-auto no-scrollbar pointer-events-auto">
-                      <div className="flex -space-x-10 p-4">
-                        {hands[turn].map((card, i) => (
+                  <div className="h-64 relative mt-auto border-t border-white/5 pt-4">
+                    <div className="absolute inset-0 flex justify-center items-end pb-4 overflow-x-auto no-scrollbar pointer-events-auto">
+                      <div className="flex -space-x-12 p-6">
+                        {turn === 0 ? hands[turn].map((card, i) => (
                           <motion.button
                             key={card.id + i}
-                            whileHover={{ y: -60, zIndex: 50, scale: 1.1 }}
+                            whileHover={{ y: -80, zIndex: 100, scale: 1.2 }}
                             onClick={() => playCard(card, i)}
                             disabled={!!activeQuestion || frozen[turn]}
                             className={`
-                              w-24 h-36 md:w-32 md:h-44 rounded-xl border-2 shadow-2xl shrink-0 transition-all duration-300
+                              w-28 h-40 md:w-36 md:h-52 rounded-xl border-2 shadow-2xl shrink-0 transition-all duration-300
                               ${card.difficulty === 'Hard' ? 'bg-gradient-to-br from-rose-900 to-rose-950 border-rose-500 glow-crimson' :
                                 card.difficulty === 'MediumHard' ? 'bg-gradient-to-br from-amber-700 to-amber-900 border-amber-400 glow-gold' :
                                 card.difficulty === 'Medium' ? 'bg-gradient-to-br from-slate-700 to-slate-900 border-slate-400' :
                                 'bg-gradient-to-br from-gray-800 to-gray-950 border-gray-600'
                               }
                               ${!!activeQuestion || frozen[turn] ? 'grayscale opacity-50' : 'cursor-pointer'}
-                              flex flex-col items-center justify-between p-3 text-center
+                              flex flex-col items-center justify-between p-4 text-center
                             `}
-                            style={{ rotate: `${(i - hands[turn].length / 2) * 5}deg` }}
+                            style={{ 
+                              rotate: `${(i - hands[turn].length / 2) * 4}deg`,
+                            }}
                           >
                             <div className="text-[10px] font-black uppercase opacity-60 tracking-wider">
                                {card.difficulty}
                             </div>
                             <div className="flex-1 flex flex-col items-center justify-center gap-1">
-                              <div className="text-sm font-black leading-tight text-white mb-1">
+                              <div className="text-sm md:text-base font-black leading-tight text-white mb-1">
                                 {card.name}
                               </div>
-                              {card.power !== SpecialPower.NONE && <Zap size={18} className="text-amber-400 animate-pulse" />}
+                              {card.power !== SpecialPower.NONE && <Zap size={20} className="text-amber-400 animate-pulse" />}
                             </div>
                             <div className="text-xs font-black bg-black/40 px-3 py-1 rounded-full border border-white/10 text-amber-400">
                               +{card.points}
                             </div>
                           </motion.button>
-                        ))}
+                        )) : (
+                          <div className="text-amber-400 font-black animate-pulse text-lg flex items-center gap-2">
+                            <Clock className="animate-spin" />
+                            بانتظار حركة {PLAYER_NAMES[turn]}...
+                          </div>
+                        )}
                       </div>
                     </div>
                   </div>
